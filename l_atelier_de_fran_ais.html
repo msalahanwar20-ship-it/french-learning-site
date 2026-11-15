@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="fr" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L'Atelier de Français</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        midnight: '#0b0f19',
+                        carddark: '#131c31',
+                        accentgold: '#d97706',
+                        frenchblue: '#3b82f6',
+                        frenchred: '#ef4444'
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0b0f19;
+            color: #f3f4f6;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0b0f19;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #334155;
+        }
+        .glass-panel {
+            background: rgba(19, 28, 49, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-frenchblue selection:text-white">
+
+    <!-- Top Navigation -->
+    <header class="sticky top-0 z-50 glass-panel border-b border-gray-800 px-4 lg:px-12 py-4 flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-frenchblue via-indigo-600 to-frenchred flex items-center justify-center shadow-lg shadow-blue-500/20 text-white font-bold text-lg">
+                FA
+            </div>
+            <div>
+                <h1 class="font-bold text-lg tracking-tight text-white flex items-center gap-2">
+                    L'Atelier de Français
+                    <span class="text-xs px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">Pro Edition</span>
+                </h1>
+                <p class="text-xs text-gray-400">Copyright © Shahd Mohamed Salah. All Rights Reserved.</p>
+            </div>
+        </div>
+
+        <nav class="hidden md:flex items-center space-x-1">
+            <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn px-4 py-2 rounded-lg text-sm font-medium transition-all bg-blue-600 text-white shadow-md shadow-blue-600/20">
+                <i class="fa-solid fa-house mr-2"></i>Dashboard
+            </button>
+            <button onclick="switchTab('grammar')" id="nav-grammar" class="nav-btn px-4 py-2 rounded-lg text-sm font-medium transition-all text-gray-300 hover:text-white hover:bg-white/5">
+                <i class="fa-solid fa-book mr-2"></i>Grammar Bank
+            </button>
+            <button onclick="switchTab('vocabulary')" id="nav-vocabulary" class="nav-btn px-4 py-2 rounded-lg text-sm font-medium transition-all text-gray-300 hover:text-white hover:bg-white/5">
+                <i class="fa-solid fa-language mr-2"></i>Vocabulary Hub
+            </button>
+            <button onclick="switchTab('methods')" id="nav-methods" class="nav-btn px-4 py-2 rounded-lg text-sm font-medium transition-all text-gray-300 hover:text-white hover:bg-white/5">
+                <i class="fa-solid fa-brain mr-2"></i>Study Methods
+            </button>
+            <button onclick="switchTab('quiz')" id="nav-quiz" class="nav-btn px-4 py-2 rounded-lg text-sm font-medium transition-all text-gray-300 hover:text-white hover:bg-white/5">
+                <i class="fa-solid fa-clipboard-question mr-2"></i>Interactive Quizzes
+            </button>
+        </nav>
+
+        <div class="flex items-center space-x-3">
+            <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium">
+                <i class="fa-solid fa-shield-halved"></i> Verified Creator: Shahd Mohamed Salah
+            </div>
+            <!-- Mobile Menu Toggle -->
+            <button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg bg-white/5 text-gray-300 hover:text-white">
+                <i class="fa-solid fa-bars text-xl"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Drawer -->
+    <div id="mobile-menu" class="hidden fixed inset-0 z-40 bg-black/80 backdrop-blur-sm md:hidden flex flex-col p-6 space-y-4 pt-24">
+        <button onclick="switchTab('dashboard'); toggleMobileMenu();" class="w-full text-left p-3 rounded-lg bg-white/5 text-white font-medium flex items-center gap-3">
+            <i class="fa-solid fa-house text-blue-400"></i> Dashboard
+        </button>
+        <button onclick="switchTab('grammar'); toggleMobileMenu();" class="w-full text-left p-3 rounded-lg bg-white/5 text-white font-medium flex items-center gap-3">
+            <i class="fa-solid fa-book text-blue-400"></i> Grammar Bank
+        </button>
+        <button onclick="switchTab('vocabulary'); toggleMobileMenu();" class="w-full text-left p-3 rounded-lg bg-white/5 text-white font-medium flex items-center gap-3">
+            <i class="fa-solid fa-language text-blue-400"></i> Vocabulary Hub
+        </button>
+        <button onclick="switchTab('methods'); toggleMobileMenu();" class="w-full text-left p-3 rounded-lg bg-white/5 text-white font-medium flex items-center gap-3">
+            <i class="fa-solid fa-brain text-blue-400"></i> Study Methods
+        </button>
+        <button onclick="switchTab('quiz'); toggleMobileMenu();" class="w-full text-left p-3 rounded-lg bg-white/5 text-white font-medium flex items-center gap-3">
+            <i class="fa-solid fa-clipboard-question text-blue-400"></i> Interactive Quizzes
+        </button>
+        <button onclick="toggleMobileMenu()" class="mt-auto w-full py-3 rounded-lg bg-red-500/20 text-red-400 font-medium text-center">
+            Close Menu
+        </button>
+    </div>
+
+    <!-- Main Container -->
+    <main class="flex-grow container mx-auto px-4 py-8 max-w-7xl">
+
+        <!-- DASHBOARD VIEW -->
+        <section id="view-dashboard" class="space-y-8 animate-fadeIn">
+            <!-- Hero Banner -->
+            <div class="relative overflow-hidden rounded-3xl glass-panel p-8 md:p-12 border border-blue-500/20 bg-gradient-to-r from-blue-950/40 via-indigo-950/30 to-purple-950/40 shadow-2xl">
+                <div class="absolute -right-16 -top-16 w-72 h-72 bg-blue-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute right-32 bottom-0 w-64 h-64 bg-red-500/10 rounded-full blur-3xl pointer-events-none"></div>
+                
+                <div class="relative z-10 max-w-2xl space-y-4">
+                    <span class="px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 text-xs font-semibold tracking-wide uppercase border border-blue-500/30">
+                        Master Fluent French
+                    </span>
+                    <h2 class="text-3xl md:text-5xl font-extrabold text-white tracking-tight leading-tight">
+                        Elevate Your French With Precision & Elegance
+                    </h2>
+                    <p class="text-gray-300 text-base md:text-lg leading-relaxed">
+                        Welcome to your ultimate command center for French mastery. Curated by Shahd Mohamed Salah, featuring comprehensive grammar rules, thematic high-yield vocabularies, spaced repetition techniques, and interactive drills.
+                    </p>
+                    <div class="pt-4 flex flex-wrap gap-4">
+                        <button onclick="switchTab('grammar')" class="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold transition-all shadow-lg shadow-blue-600/30 flex items-center gap-2">
+                            <i class="fa-solid fa-book-open"></i> Explore Grammar
+                        </button>
+                        <button onclick="switchTab('quiz')" class="px-6 py-3 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold transition-all border border-white/10 flex items-center gap-2">
+                            <i class="fa-solid fa-bolt"></i> Take a Quiz
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Stats & Modules Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div onclick="switchTab('grammar')" class="glass-panel p-6 rounded-2xl hover:border-blue-500/40 transition-all cursor-pointer group">
+                    <div class="w-12 h-12 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-pen-nib"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-1">Grammar Masterclass</h3>
+                    <p class="text-sm text-gray-400">Verbs, tenses, agreements, pronouns & mood rules explained simply.</p>
+                </div>
+
+                <div onclick="switchTab('vocabulary')" class="glass-panel p-6 rounded-2xl hover:border-indigo-500/40 transition-all cursor-pointer group">
+                    <div class="w-12 h-12 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-box-archive"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-1">Vocabulary Banks</h3>
+                    <p class="text-sm text-gray-400">Thematic word lists with audio phonetic guides & example sentences.</p>
+                </div>
+
+                <div onclick="switchTab('methods')" class="glass-panel p-6 rounded-2xl hover:border-purple-500/40 transition-all cursor-pointer group">
+                    <div class="w-12 h-12 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-lightbulb"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-1">Study Blueprints</h3>
+                    <p class="text-sm text-gray-400">Proven revision techniques: Spaced repetition, active recall & output hacks.</p>
+                </div>
+
+                <div onclick="switchTab('quiz')" class="glass-panel p-6 rounded-2xl hover:border-emerald-500/40 transition-all cursor-pointer group">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-award"></i>
+                    </div>
+                    <h3 class="text-lg font-bold text-white mb-1">Interactive Quizzes</h3>
+                    <p class="text-sm text-gray-400">Test your mastery across multiple levels with instant feedback.</p>
+                </div>
+            </div>
+
+            <!-- Daily French Quote Card -->
+            <div class="glass-panel p-6 rounded-2xl border-l-4 border-l-amber-500 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div>
+                    <span class="text-xs uppercase tracking-wider text-amber-400 font-semibold">Citation du Jour</span>
+                    <p class="text-white text-lg font-medium italic mt-1">"Apprendre une autre langue, c'est se détendre dans un autre esprit."</p>
+                    <p class="text-xs text-gray-400 mt-1">Translation: To learn another language is to dwell in another spirit.</p>
+                </div>
+                <div class="px-4 py-2 rounded-xl bg-amber-500/10 text-amber-300 text-sm font-semibold border border-amber-500/20">
+                    Proverbe Français
+                </div>
+            </div>
+        </section>
+
+        <!-- GRAMMAR BANK VIEW -->
+        <section id="view-grammar" class="hidden space-y-6 animate-fadeIn">
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-2xl md:text-3xl font-bold text-white">Comprehensive Grammar Bank</h2>
+                    <p class="text-gray-400 text-sm">Deep-dive guides into French grammatical architecture.</p>
+                </div>
+                <!-- Category Filters -->
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="filterGrammar('all')" class="grammar-filter-btn px-4 py-2 rounded-xl text-xs font-semibold bg-blue-600 text-white transition-all">All</button>
+                    <button onclick="filterGrammar('tenses')" class="grammar-filter-btn px-4 py-2 rounded-xl text-xs font-semibold bg-white/10 text-gray-300 hover:bg-white/20 transition-all">Verbs & Tenses</button>
+                    <button onclick="filterGrammar('pronouns')" class="grammar-filter-btn px-4 py-2 rounded-xl text-xs font-semibold bg-white/10 text-gray-300 hover:bg-white/20 transition-all">Pronouns</button>
+                    <button onclick="filterGrammar('agreements')" class="grammar-filter-btn px-4 py-2 rounded-xl text-xs font-semibold bg-white/10 text-gray-300 hover:bg-white/20 transition-all">Agreements</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="grammar-container">
+                <!-- Grammar Cards injected via JS -->
+            </div>
+        </section>
+
+        <!-- VOCABULARY HUB VIEW -->
+        <section id="view-vocabulary" class="hidden space-y-6 animate-fadeIn">
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div>
+                    <h2 class="text-2xl md:text-3xl font-bold text-white">High-Yield Vocabulary Hub</h2>
+                    <p class="text-gray-400 text-sm">Thematic vocab banks essential for everyday fluency and exams.</p>
+                </div>
+                <!-- Theme Selector -->
+                <div class="flex flex-wrap gap-2">
+                    <button onclick="filterVocab('travel')" class="vocab-filter-btn px-4 py-2 rounded-xl text-xs font-semibold bg-blue-600 text-white transition-all">Travel & City</button>
+                    <button onclick="filterVocab('food')" class="vocab-filter-btn px-4 py-2 rounded-xl text-xs font-semibold bg-white/10 text-gray-300 hover:bg-white/20 transition-all">Food & Dining</button>
+                    <button onclick="filterVocab('business')" class="vocab-filter-btn px-4 py-2 rounded-xl text-xs font-semibold bg-white/10 text-gray-300 hover:bg-white/20 transition-all">Work & Business</button>
+                    <button onclick="filterVocab('emotions')" class="vocab-filter-btn px-4 py-2 rounded-xl text-xs font-semibold bg-white/10 text-gray-300 hover:bg-white/20 transition-all">Feelings</button>
+                </div>
+            </div>
+
+            <!-- Search Vocab -->
+            <div class="relative">
+                <i class="fa-solid fa-search absolute left-4 top-3.5 text-gray-400"></i>
+                <input type="text" id="vocab-search" oninput="searchVocabulary(this.value)" placeholder="Search French or English words..." class="w-full pl-11 pr-4 py-3 rounded-xl glass-panel text-white placeholder-gray-400 focus:outline-none focus:border-blue-500 transition-all">
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="vocabulary-container">
+                <!-- Vocab cards injected via JS -->
+            </div>
+        </section>
+
+        <!-- STUDY METHODS VIEW -->
+        <section id="view-methods" class="hidden space-y-6 animate-fadeIn">
+            <div>
+                <h2 class="text-2xl md:text-3xl font-bold text-white">Proven Study Blueprints</h2>
+                <p class="text-gray-400 text-sm">Master cognitive frameworks used by polyglots to absorb French fast.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Method 1 -->
+                <div class="glass-panel p-6 rounded-2xl space-y-4 border border-blue-500/20">
+                    <div class="w-12 h-12 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center text-xl font-bold">1</div>
+                    <h3 class="text-xl font-bold text-white">Spaced Repetition (SRS)</h3>
+                    <p class="text-gray-300 text-sm leading-relaxed">
+                        Review vocabulary and rules just before your brain is about to forget them. Use apps like Anki or our built-in flashcard schedule intervals (1 day, 3 days, 7 days, 14 days, 30 days).
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><i class="fa-solid fa-check text-blue-400 mr-2"></i> Fight the forgetting curve</li>
+                        <li><i class="fa-solid fa-check text-blue-400 mr-2"></i> Move data to long-term memory</li>
+                    </ul>
+                </div>
+
+                <!-- Method 2 -->
+                <div class="glass-panel p-6 rounded-2xl space-y-4 border border-purple-500/20">
+                    <div class="w-12 h-12 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-xl font-bold">2</div>
+                    <h3 class="text-xl font-bold text-white">Active Recall & Output</h3>
+                    <p class="text-gray-300 text-sm leading-relaxed">
+                        Instead of passively rereading rules, force your brain to retrieve answers. Write mini-journals in French every evening, even if grammar is imperfect.
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><i class="fa-solid fa-check text-purple-400 mr-2"></i> Self-testing over rereading</li>
+                        <li><i class="fa-solid fa-check text-purple-400 mr-2"></i> Shadowing native podcasts</li>
+                    </ul>
+                </div>
+
+                <!-- Method 3 -->
+                <div class="glass-panel p-6 rounded-2xl space-y-4 border border-emerald-500/20">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-xl font-bold">3</div>
+                    <h3 class="text-xl font-bold text-white">Contextual Chunking</h3>
+                    <p class="text-gray-300 text-sm leading-relaxed">
+                        Never memorize isolated words. Learn phrases and collocations in context (e.g., instead of memorizing "besoin", learn "avoir besoin de").
+                    </p>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><i class="fa-solid fa-check text-emerald-400 mr-2"></i> Natural sentence flow</li>
+                        <li><i class="fa-solid fa-check text-emerald-400 mr-2"></i> Faster speaking fluency</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- INTERACTIVE QUIZ VIEW -->
+        <section id="view-quiz" class="hidden space-y-6 animate-fadeIn max-w-3xl mx-auto">
+            <div>
+                <h2 class="text-2xl md:text-3xl font-bold text-white text-center">Interactive French Knowledge Check</h2>
+                <p class="text-gray-400 text-sm text-center">Test your grasp of French grammar, pronouns, and vocabulary.</p>
+            </div>
+
+            <div class="glass-panel p-8 rounded-3xl shadow-xl space-y-6" id="quiz-card">
+                <div class="flex items-center justify-between border-b border-gray-800 pb-4">
+                    <span id="quiz-progress" class="text-xs font-semibold text-blue-400 uppercase tracking-widest">Question 1 of 5</span>
+                    <span id="quiz-score" class="text-xs font-semibold text-emerald-400">Score: 0</span>
+                </div>
+
+                <div id="quiz-question-area" class="space-y-4">
+                    <h3 id="quiz-question-title" class="text-xl font-bold text-white">Loading question...</h3>
+                    <div id="quiz-options" class="space-y-3">
+                        <!-- Options injected via JS -->
+                    </div>
+                </div>
+
+                <div id="quiz-feedback" class="hidden p-4 rounded-xl text-sm font-medium"></div>
+
+                <div class="flex justify-end pt-4">
+                    <button id="quiz-next-btn" onclick="nextQuizQuestion()" class="hidden px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold transition-all">
+                        Next Question <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quiz Results Card -->
+            <div id="quiz-results" class="hidden glass-panel p-8 rounded-3xl text-center space-y-6">
+                <div class="w-20 h-20 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center mx-auto text-3xl">
+                    <i class="fa-solid fa-trophy"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-white">Quiz Completed!</h3>
+                <p id="quiz-final-score" class="text-lg text-gray-300">You scored X out of Y</p>
+                <button onclick="restartQuiz()" class="px-6 py-3 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold transition-all">
+                    Try Again <i class="fa-solid fa-rotate-right ml-2"></i>
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-auto glass-panel border-t border-gray-800 py-8 px-4 text-center text-gray-400 text-sm space-y-3">
+        <div class="flex items-center justify-center gap-2 text-white font-semibold">
+            <div class="w-6 h-6 rounded bg-gradient-to-tr from-frenchblue to-frenchred flex items-center justify-center text-xs text-white">FA</div>
+            L'Atelier de Français
+        </div>
+        <p class="text-xs text-gray-400 max-w-md mx-auto">
+            Designed for learners seeking precision and depth in the French language.
+        </p>
+        <p class="text-xs font-medium text-amber-400/90 pt-2 border-t border-gray-800/60 max-w-lg mx-auto">
+            Copyright © Shahd Mohamed Salah. All Rights Reserved. No part of this curriculum, website layout, or content may be reproduced or distributed without explicit written consent.
+        </p>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Tab Navigation Switcher
+        function switchTab(tabId) {
+            const tabs = ['dashboard', 'grammar', 'vocabulary', 'methods', 'quiz'];
+            tabs.forEach(t => {
+                document.getElementById(`view-${t}`).classList.add('hidden');
+                const navBtn = document.getElementById(`nav-${t}`);
+                if(navBtn) {
+                    navBtn.className = "nav-btn px-4 py-2 rounded-lg text-sm font-medium transition-all text-gray-300 hover:text-white hover:bg-white/5";
+                }
+            });
+
+            document.getElementById(`view-${tabId}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`nav-${tabId}`);
+            if(activeBtn) {
+                activeBtn.className = "nav-btn px-4 py-2 rounded-lg text-sm font-medium transition-all bg-blue-600 text-white shadow-md shadow-blue-600/20";
+            }
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Grammar Data
+        const grammarData = [
+            {
+                id: 1,
+                category: 'tenses',
+                title: 'Le Présent de l\'Indicatif',
+                badge: 'Verbs & Tenses',
+                description: 'The present tense is used for habitual actions, general truths, and current states.',
+                rules: 'Group 1 (-er verbs): drop -er, add -e, -es, -e, -ons, -ez, -ent.\nGroup 2 (-ir verbs): add -is, -is, -it, -issons, -issez, -issent.\nGroup 3 (Irregular e.g., être/avoir): must be memorized.',
+                example: 'Je parle français tous les jours. (I speak French every day.)'
+            },
+            {
+                id: 2,
+                category: 'tenses',
+                title: 'Le Passé Composé vs. L\'Imparfait',
+                badge: 'Verbs & Tenses',
+                description: 'The eternal French dilemma: Completed past actions vs. ongoing background descriptions.',
+                rules: 'Passé Composé: Auxiliaries (avoir/être) + past participle for single completed events.\nImparfait: Stem from nous form in present + endings (-ais, -ais, -ait, -ions, -iez, -aient) for habits/backgrounds.',
+                example: 'Il pleuvait (Imparfait) quand je suis sorti (Passé Composé).'
+            },
+            {
+                id: 3,
+                category: 'pronouns',
+                title: 'Direct & Indirect Object Pronouns',
+                badge: 'Pronouns',
+                description: 'Replace nouns to avoid repetition in conversation (me, te, le, la, lui, leur, y, en).',
+                rules: 'COD (Direct): le, la, les (Answers who/what).\nCOI (Indirect): lui, leur (Answers to whom).\nPlacement: Always placed BEFORE the conjugated verb.',
+                example: 'Je le connais. (I know him.) / Je lui parle. (I speak to him.)'
+            },
+            {
+                id: 4,
+                category: 'agreements',
+                title: 'Adjective & Past Participle Agreements',
+                badge: 'Agreements',
+                description: 'In French, adjectives and certain past participles must match gender (masculine/feminine) and number (singular/plural).',
+                rules: 'Feminine: Add -e. Plural: Add -s.\nPassé Composé with ÊTRE: Always agree with the subject in gender and number (e.g., Elle est venue).',
+                example: 'Une maison blanche (A white house) / Des livres intéressants (Interesting books).'
+            }
+        ];
+
+        function renderGrammar(filter = 'all') {
+            const container = document.getElementById('grammar-container');
+            container.innerHTML = '';
+            
+            const filtered = filter === 'all' ? grammarData : grammarData.filter(g => g.category === filter);
+            
+            filtered.forEach(item => {
+                container.innerHTML += `
+                    <div class="glass-panel p-6 rounded-2xl space-y-4 border border-gray-800 hover:border-blue-500/30 transition-all">
+                        <div class="flex items-center justify-between">
+                            <span class="px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 text-xs font-semibold">${item.badge}</span>
+                            <span class="text-xs text-gray-500">Rule #${item.id}</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white">${item.title}</h3>
+                        <p class="text-gray-300 text-sm">${item.description}</p>
+                        <div class="p-3 rounded-xl bg-black/30 border border-white/5 space-y-1">
+                            <span class="text-xs font-semibold text-blue-400 uppercase">Core Rules:</span>
+                            <p class="text-xs text-gray-300 whitespace-pre-line">${item.rules}</p>
+                        </div>
+                        <div class="p-3 rounded-xl bg-blue-950/20 border border-blue-500/20">
+                            <span class="text-xs font-semibold text-amber-400 uppercase">Example:</span>
+                            <p class="text-sm italic text-white mt-0.5">${item.example}</p>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function filterGrammar(cat) {
+            document.querySelectorAll('.grammar-filter-btn').forEach(btn => {
+                btn.className = "grammar-filter-btn px-4 py-2 rounded-xl text-xs font-semibold bg-white/10 text-gray-300 hover:bg-white/20 transition-all";
+            });
+            event.target.className = "grammar-filter-btn px-4 py-2 rounded-xl text-xs font-semibold bg-blue-600 text-white transition-all";
+            renderGrammar(cat);
+        }
+
+        // Vocabulary Data
+        const vocabularyData = [
+            { theme: 'travel', fr: 'Un billet aller-retour', en: 'A round-trip ticket', phonetic: '/œ̃ bi.jɛ a.le ʁu.tuʁ/' },
+            { theme: 'travel', fr: 'La carte d\'embarquement', en: 'Boarding pass', phonetic: '/la kaʁt dɑ̃.baʁ.kə.mɑ̃/' },
+            { theme: 'travel', fr: 'L\'office de tourisme', en: 'Tourist information office', phonetic: '/lɔ.fis də tu.ʁism/' },
+            { theme: 'food', fr: 'Une baguette tradition', en: 'Traditional French baguette', phonetic: '/yn ba.ɡɛt tʁa.di.sjɔ̃/' },
+            { theme: 'food', fr: 'L\'addition, s\'il vous plaît', en: 'The bill, please', phonetic: '/la.dis.jɔ̃ sil vu plɛ/' },
+            { theme: 'food', fr: 'Fait maison', en: 'Homemade', phonetic: '/fɛ mɛ.zɔ̃/' },
+            { theme: 'business', fr: 'Un entretien d\'embauche', en: 'A job interview', phonetic: '/œ̃ ɑ̃.tʁə.tjɛ̃ dɑ̃.boʃ/' },
+            { theme: 'business', fr: 'Le chiffre d\'affaires', en: 'Turnover / Revenue', phonetic: '/lə ʃifʁ da.fɛʁ/' },
+            { theme: 'business', fr: 'Un collègue de bureau', en: 'An office colleague', phonetic: '/œ̃ kɔ.lɛɡ də by.ʁo/' },
+            { theme: 'emotions', fr: 'Émerveillé(e)', en: 'Filled with wonder / Amazed', phonetic: '/e.mɛʁ.ve.je/' },
+            { theme: 'emotions', fr: 'Avoir le mal du pays', en: 'To be homesick', phonetic: '/a.vwaʁ lə mal dy pe.i/' },
+            { theme: 'emotions', fr: 'Un sentiment de soulagement', en: 'A sense of relief', phonetic: '/œ̃ sɑ̃.ti.mɑ̃ də su.laʒ.mɑ̃/' }
+        ];
+
+        let currentVocabTheme = 'travel';
+
+        function renderVocabulary(theme = 'travel', searchQuery = '') {
+            const container = document.getElementById('vocabulary-container');
+            container.innerHTML = '';
+
+            let filtered = vocabularyData.filter(v => v.theme === theme);
+            if(searchQuery.trim() !== '') {
+                const q = searchQuery.toLowerCase();
+                filtered = vocabularyData.filter(v => v.fr.toLowerCase().includes(q) || v.en.toLowerCase().includes(q));
+            }
+
+            if(filtered.length === 0) {
+                container.innerHTML = `<div class="col-span-full text-center py-8 text-gray-400">No vocabulary found matching your search.</div>`;
+                return;
+            }
+
+            filtered.forEach(item => {
+                container.innerHTML += `
+                    <div class="glass-panel p-5 rounded-2xl space-y-2 border border-gray-800 hover:border-indigo-500/30 transition-all">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs uppercase px-2.5 py-0.5 rounded-md bg-indigo-500/10 text-indigo-400 font-semibold">${item.theme}</span>
+                            <span class="text-xs text-gray-500 font-mono">${item.phonetic}</span>
+                        </div>
+                        <h4 class="text-lg font-bold text-white">${item.fr}</h4>
+                        <p class="text-sm text-gray-300 font-medium">${item.en}</p>
+                    </div>
+                `;
+            });
+        }
+
+        function filterVocab(theme) {
+            currentVocabTheme = theme;
+            document.querySelectorAll('.vocab-filter-btn').forEach(btn => {
+                btn.className = "vocab-filter-btn px-4 py-2 rounded-xl text-xs font-semibold bg-white/10 text-gray-300 hover:bg-white/20 transition-all";
+            });
+            event.target.className = "vocab-filter-btn px-4 py-2 rounded-xl text-xs font-semibold bg-blue-600 text-white transition-all";
+            document.getElementById('vocab-search').value = '';
+            renderVocabulary(theme);
+        }
+
+        function searchVocabulary(query) {
+            renderVocabulary(currentVocabTheme, query);
+        }
+
+        // Interactive Quiz Engine
+        const quizQuestions = [
+            {
+                question: "Choose the correct conjugation of 'avoir' (to have) for 'nous':",
+                options: ["Nous avons", "Nous êtes", "Nous ont", "Nous avons avons"],
+                correct: 0
+            },
+            {
+                question: "Which pronoun replaces a direct object for a feminine singular noun (e.g., la pomme)?",
+                options: ["Le", "La", "Lui", "Y"],
+                correct: 1
+            },
+            {
+                question: "What does the French expression 'Avoir le cafard' mean?",
+                options: ["To have a pet insect", "To feel depressed or blue", "To be extremely energetic", "To love coffee"],
+                correct: 1
+            },
+            {
+                question: "Which tense is best used for a recurring habit in the past?",
+                options: ["Le Passé Composé", "Le Futur Simple", "L'Imparfait", "Le Présent"],
+                correct: 2
+            },
+            {
+                question: "In the sentence 'Elle est allée', why is there an extra 'e' on allée?",
+                options: ["It's a spelling mistake", "Verbs conjugated with être in the passé composé agree with feminine subjects", "It's plural", "It's imperative mood"],
+                correct: 1
+            }
+        ];
+
+        let currentQuizIndex = 0;
+        let quizScore = 0;
+        let answeredCurrent = false;
+
+        function loadQuizQuestion() {
+            answeredCurrent = false;
+            const q = quizQuestions[currentQuizIndex];
+            document.getElementById('quiz-progress').innerText = `Question ${currentQuizIndex + 1} of ${quizQuestions.length}`;
+            document.getElementById('quiz-score').innerText = `Score: ${quizScore}`;
+            document.getElementById('quiz-question-title').innerText = q.question;
+            
+            const optionsContainer = document.getElementById('quiz-options');
+            optionsContainer.innerHTML = '';
+            
+            q.options.forEach((opt, idx) => {
+                optionsContainer.innerHTML += `
+                    <button onclick="selectQuizOption(${idx})" id="opt-${idx}" class="w-full text-left p-4 rounded-xl glass-panel hover:bg-white/10 text-white font-medium transition-all border border-gray-800">
+                        ${opt}
+                    </button>
+                `;
+            });
+
+            document.getElementById('quiz-feedback').classList.add('hidden');
+            document.getElementById('quiz-next-btn').classList.add('hidden');
+        }
+
+        function selectQuizOption(selectedIndex) {
+            if(answeredCurrent) return;
+            answeredCurrent = true;
+
+            const q = quizQuestions[currentQuizIndex];
+            const feedbackEl = document.getElementById('quiz-feedback');
+            feedbackEl.classList.remove('hidden');
+
+            if(selectedIndex === q.correct) {
+                quizScore++;
+                document.getElementById(`opt-${selectedIndex}`).className = "w-full text-left p-4 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-medium";
+                feedbackEl.className = "p-4 rounded-xl text-sm font-medium bg-emerald-500/10 text-emerald-300 border border-emerald-500/20";
+                feedbackEl.innerHTML = `<i class="fa-solid fa-circle-check mr-2"></i> Correct! Excellent grasp of French rules.`;
+            } else {
+                document.getElementById(`opt-${selectedIndex}`).className = "w-full text-left p-4 rounded-xl bg-red-500/20 text-red-300 border border-red-500/40 font-medium";
+                document.getElementById(`opt-${q.correct}`).className = "w-full text-left p-4 rounded-xl bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 font-medium";
+                feedbackEl.className = "p-4 rounded-xl text-sm font-medium bg-red-500/10 text-red-300 border border-red-500/20";
+                feedbackEl.innerHTML = `<i class="fa-solid fa-circle-xmark mr-2"></i> Incorrect. The correct answer was: <strong>${q.options[q.correct]}</strong>`;
+            }
+
+            document.getElementById('quiz-score').innerText = `Score: ${quizScore}`;
+            document.getElementById('quiz-next-btn').classList.remove('hidden');
+        }
+
+        function nextQuizQuestion() {
+            currentQuizIndex++;
+            if(currentQuizIndex < quizQuestions.length) {
+                loadQuizQuestion();
+            } else {
+                document.getElementById('quiz-question-area').classList.add('hidden');
+                document.getElementById('quiz-feedback').classList.add('hidden');
+                document.getElementById('quiz-next-btn').classList.add('hidden');
+                document.getElementById('quiz-results').classList.remove('hidden');
+                document.getElementById('quiz-final-score').innerText = `You scored ${quizScore} out of ${quizQuestions.length}`;
+            }
+        }
+
+        function restartQuiz() {
+            currentQuizIndex = 0;
+            quizScore = 0;
+            document.getElementById('quiz-question-area').classList.remove('hidden');
+            document.getElementById('quiz-results').classList.add('hidden');
+            loadQuizQuestion();
+        }
+
+        // Initialize on load
+        window.onload = function() {
+            renderGrammar();
+            renderVocabulary('travel');
+            loadQuizQuestion();
+        };
+    </script>
+</body>
+</html>
